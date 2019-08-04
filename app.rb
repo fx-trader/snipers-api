@@ -39,7 +39,7 @@ require_relative "db/models"
     end
 
     post "/" do
-        sniper = Sniper.new(params)
+        sniper = Sniper.new(json_params)
 
         if sniper.save
             response.headers['Location'] = "#{base_url}/snipers/#{sniper.id}"
@@ -54,7 +54,7 @@ require_relative "db/models"
         sniper = Sniper.where(id: id).first
         halt(404, { message:'Not Found'}.to_json) unless sniper
 
-        if sniper.update_attributes(params)
+        if sniper.update_attributes(json_params)
             sniper.to_json
         else
             status 422
