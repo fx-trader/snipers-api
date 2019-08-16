@@ -26,19 +26,19 @@ require_relative "db/models"
 
     end
 
-    get "/" do
+    get "/snipers/" do
         snipers = Sniper.all
         snipers = snipers.send('instrument', params['instrument']) if (params['instrument']);
         snipers.to_json
     end
 
-    get "/:id" do |id|
+    get "/snipers/:id" do |id|
         sniper = Sniper.where(id: id).first
         halt(404, { message:'Not Found'}.to_json) unless(sniper)
         sniper.to_json
     end
 
-    post "/" do
+    post "/snipers/" do
         sniper = Sniper.new(json_params)
 
         if sniper.save
@@ -50,7 +50,7 @@ require_relative "db/models"
         end
     end
 
-    patch '/:id ' do |id|
+    patch '/snipers/:id ' do |id|
         sniper = Sniper.where(id: id).first
         halt(404, { message:'Not Found'}.to_json) unless sniper
 
@@ -62,7 +62,7 @@ require_relative "db/models"
         end
     end
 
-    delete "/:id" do |id|
+    delete "/snipers/:id" do |id|
         sniper = Sniper.where(id: id).first
         sniper.destroy if sniper
         status 204
