@@ -12,6 +12,10 @@ require_relative "db/models"
     end
 
     helpers do
+        def account
+            Account.where(email: "joaocosta@zonalivre.org").first
+        end
+
         def base_url
             @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
         end
@@ -27,19 +31,20 @@ require_relative "db/models"
     end
 
     get "/snipers/" do
-        snipers = Sniper.all
+        snipers = Sniper.account(account)
         snipers = snipers.send('instrument', params['instrument']) if (params['instrument']);
         snipers.to_json
     end
 
     get "/snipers/:id" do |id|
-        sniper = Sniper.where(id: id).first
+        sniper = Sniper.account(account).where(id: id).first
         halt(404, { message:'Not Found'}.to_json) unless(sniper)
         sniper.to_json
     end
 
     post "/snipers/" do
         sniper = Sniper.new(json_params)
+        sniper.account = account
 
         if sniper.save
             response.headers['Location'] = "#{base_url}/snipers/#{sniper.id}"
@@ -51,7 +56,7 @@ require_relative "db/models"
     end
 
     patch '/snipers/:id ' do |id|
-        sniper = Sniper.where(id: id).first
+        sniper = Sniper.account(account).where(id: id).first
         halt(404, { message:'Not Found'}.to_json) unless sniper
 
         if sniper.update_attributes(json_params)
@@ -63,7 +68,7 @@ require_relative "db/models"
     end
 
     delete "/snipers/:id" do |id|
-        sniper = Sniper.where(id: id).first
+        sniper = Sniper.account(account).where(id: id).first
         sniper.destroy if sniper
         status 204
     end
