@@ -1,4 +1,4 @@
-require_relative "connection"
+require_relative "models"
 
  ActiveRecord::Schema.define do
 
@@ -12,6 +12,7 @@ require_relative "connection"
     t.boolean :uses_time_restrictions, :null => false, :default => true
   end
   add_index :accounts, :email, unique: true
+  Account.create :email => 'joaocosta@zonalivre.org'
 
   create_table :snipers, force: :cascade do |t|
     t.integer :account_id,  :null => false, :references => [:accounts, :id]
