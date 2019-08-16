@@ -11,6 +11,7 @@ class Sniper < ActiveRecord::Base
   validates :expression, presence: true
   validates :quantity, presence: true
 
+  scope :account, -> (account_id) { where(account: account_id) }
   scope :instrument, -> (instrument) { where(instrument: instrument) }
   belongs_to :account
 end
