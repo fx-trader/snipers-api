@@ -1,7 +1,7 @@
 require_relative "connection"
 
 class Account < ActiveRecord::Base
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :snipers
 end
 
@@ -16,4 +16,6 @@ class Sniper < ActiveRecord::Base
 end
 
 class EconomicCalendar < ActiveRecord::Base
+  validates :start, presence: true
+  validates :description, presence: true
 end

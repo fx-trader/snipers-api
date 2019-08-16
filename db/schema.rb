@@ -14,11 +14,11 @@ require_relative "connection"
   add_index :accounts, :email, unique: true
 
   create_table :snipers, force: :cascade do |t|
-    t.integer :account_id, :null => false, :references => [:accounts, :id]
-    t.string  :instrument, :null => false
-    t.string  :timeframe, :null => false
-    t.string  :expression, :null => false
-    t.integer :quantity, :null => false
+    t.integer :account_id,  :null => false, :references => [:accounts, :id]
+    t.string  :instrument,  :null => false
+    t.string  :timeframe,   :null => false
+    t.string  :expression,  :null => false
+    t.integer :quantity,    :null => false
   end
   add_foreign_key :snipers, :accounts
 
