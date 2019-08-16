@@ -8,3 +8,6 @@ require "active_record"
   password: "pwd",
   host: "snipers-db"
 })
+
+#uncomment to log database calls to stdout
+#ActiveRecord::Base.logger = Logger.new(STDOUT)
