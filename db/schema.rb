@@ -23,10 +23,10 @@ require_relative "models"
   end
   add_foreign_key :snipers, :accounts
 
-  create_table :economic_calendar, force: :cascade do |t|
+  create_table :economic_calendars, force: :cascade do |t|
     t.datetime :start, :null => false
     t.string   :description, :null => false, :default => ''
   end
-  add_index :economic_calendar, :start
+  add_index :economic_calendars, :start
 
 end
